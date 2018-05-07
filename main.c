@@ -181,7 +181,7 @@ int main()
 {
     setlocale(LC_ALL, "Portuguese");
     srand(time(NULL));
-    int cenario[10][10], rick = -1;
+    int cenario[10][10], rick = -1, bloqueios = 0;;
 
     for (int i = 0; i < 10; i++) {
         for (int j = 0; j < 10; j++){
@@ -220,6 +220,18 @@ int main()
         if (cenario[cenario_x][cenario_y] == 0) {
             cenario[cenario_x][cenario_y] = 4;
             count++;
+            if (cenario[cenario_x + 1][cenario_y] < 10 && cenario[cenario_x + 1][cenario_y] == 3) {
+                bloqueios++;
+            }
+            if (cenario[cenario_x - 1][cenario_y] >= 0 && cenario[cenario_x - 1][cenario_y] == 3) {
+                bloqueios++;
+            }
+            if (cenario[cenario_x][cenario_y + 1] < 10 && cenario[cenario_x][cenario_y + 1] == 3) {
+                bloqueios++;
+            }
+            if (cenario[cenario_x][cenario_y - 1] >= 0 && cenario[cenario_x][cenario_y - 1] == 3) {
+                bloqueios++;
+            }
         }
     }
 
@@ -233,6 +245,11 @@ int main()
         }
     }
 
+    if (bloqueios == 4) {
+        printf("Saida bloqueada! Rick morrera preso!\n");
+        system("pause");
+        vivo = 0;
+    }
     while (vivo) {
         movimento(cenario, &rick_x, &rick_y, &rick);
     }
